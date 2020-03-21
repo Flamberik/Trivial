@@ -4,7 +4,9 @@ import java.rmi.server.*;
 
 class ServicioJugadorImpl extends UnicastRemoteObject implements ServicioJugador{
     //String getResultado(String resultado) throws RemoteException;
-    boolean comienzo=false;
+    boolean comienzo=false;//Esta creo que sera innecesaria
+    int indice;
+
     ServicioJugadorImpl() throws RemoteException {
 
     }
@@ -38,4 +40,11 @@ class ServicioJugadorImpl extends UnicastRemoteObject implements ServicioJugador
       return pregunta;
     }
 
+
+    //-----------------------------
+    //        Para ambos
+    //-----------------------------
+      void asignar_indice(int index) throws RemoteException {
+        indice=index;
+      }
 }

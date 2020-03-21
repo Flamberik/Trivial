@@ -28,6 +28,8 @@ interface ServicioJugador extends Remote {
 //-----------------------------
 //        Para ambos
 //-----------------------------
+  void asignar_indice(int index) throws RemoteException;
+
 	void conjuntoRespuestas (ArrayList <Pregunta> p) throws RemoteException;
 	//Todos los clientes se quedan esperando (los que no sean gestor después de mandar la respuesta. Una vez que el servidor tiene todas las respuestas le manda el conjuntoRespuestas a los jugadores. El cliente que sea gestor en ese momento podrá decidir quién ha ganao en su código y llamará otra vez al servidor.
 	//

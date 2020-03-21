@@ -15,9 +15,9 @@ class Cliente {
       try {
           ServicioTrivialImpl srv = (ServicioTrivial) Naming.lookup("//" + args[0] + ":" + args[1] + "/Trivial");
           ServicioJugadorImpl c = new ServicioJugadorImpl();
-          
           //Aqui empieza el juego
-
+          srv.altaJugador(args[3]); //Damos de alta al jugador en el servidor
+          
 
 
           //Aqui termina el juego

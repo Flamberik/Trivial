@@ -1,0 +1,13 @@
+ServicioTrivial e implementacion
+-La lista que contendrá a los usuarios debe ser de objetos ServicioJugador para poder utilizar los métodos remotos (Antes era como String). Utilicé el chat como referencia.
+
+-Creada la función tam_lista_jugadores para devolver el tamaño de la lista de usuarios
+
+-Añadido el objeto gestor para identificar al usuario que en ese momento actúa de gestor
+
+ServicioJugador:
+-Una nueva función para asignar a cada jugador un indice y poder diferenciar a los jugadores del gestor actual
+
+
+En el servidor:
+-While hasta qe el numero de usuarios conectados sea el suficiente

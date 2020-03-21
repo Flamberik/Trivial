@@ -3,22 +3,27 @@ import java.rmi.*;
 import java.rmi.server.*;
 
 class ServicioTrivialImpl extends UnicastRemoteObject implements ServicioTrivial {
-    List<String> jugadores; //Tenemos que implementar la clase jugador!
-    List<Pregunta> respuestas;
+    //List<String> jugadores; //Modificado BORRAR
+    List<ServicioJugador> jugadores; //Esta lista debe ser tipo Servicio Jugador para que el server se pueda conectar con cada uno de los clientes (Utilizar las funciones definidas)
+
+    List<Pregunta> respuestas; //Cada elemento del array contendrá un objeto de la clase Pregunta: la pregunta, respuesta y el id del jugador asociado
     int indice_gestor;
     Pregunta pregunta;
 
     ServicioTrivialImpl() throws RemoteException {
-      l = new LinkedList<Jugador>();
+      jugadores = new LinkedList<ServicioJugador>();
+      respuesta = new LinkedList<Pregunta>;
       indice_gestor=0;
+      //añadido CHECKEAR
+      new ServicioJugador gestor = jugadores.get(indice_gestor);
     }
 
 
-    void altaJugador (String j) throws RemoteException {
+    void altaJugador (ServicioJugador j) throws RemoteException {
       jugadores.add(j);
     }
 
-    void bajaJugador (String j) throws RemoteException {
+    void bajaJugador (ServicioJugador j) throws RemoteException {
       jugadores.remove(jugadores.indexOf(j));
     }
 
@@ -38,6 +43,17 @@ class ServicioTrivialImpl extends UnicastRemoteObject implements ServicioTrivial
       indice_gestor++;//para cambiar el gestor d ela proxima partida
     }
 
+
+    //añadido
+    int tam_lista_jugadores() throws RemoteException {
+      return jugadores.size();
+    }
+
+    void asigna_los_indices() throws RemoteException{//Esta función asigna a cada cliente el valor de índice que tienen en la lista (Para discriminar entre gestor y jugadores)
+      for(ServicioJugador c: jugadores) {
+        c.asignar_indice(jugadores.indexOf(c));//Metemos en cada cliente el indice que le corresponde
+      }
+    }
 
 
 }

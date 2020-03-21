@@ -15,7 +15,15 @@ class Servidor {
           ServicioTrivialImpl srv = new ServicioTrivialImpl();
           Naming.rebind("rmi://localhost:" + args[0] + "/Trivial", srv);
           //Aqui empieza el juego
-          
+          while(srv.tam_lista_jugadores() != args[2]) {//Comprueba que en el lobby halla el número predefinido de jugadores
+            print("Esperando a que los jugadores se conecten\n");
+            Thread.sleep(2000);
+          }
+          //Recibe la lista completa de todos los clientes
+          srv.asigna_los_indices();
+
+          //Envia notificación a todos los jugadores (No al gestor) que esperen a que el gestor formule la pregunta
+          srv.
 
 
           //Aqui termina el juego
