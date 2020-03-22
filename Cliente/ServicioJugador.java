@@ -20,7 +20,7 @@ interface ServicioJugador extends Remote {
 //-----------------------------
 
     String solicitar_pregunta() throws RemoteException ;
-    //Esta función la va a utlizar el servidor  para indicarle al jugador correspondiende que es el que hace la pregunta
+    //Esta función la va a utlizar el servidor  para indicarle al jugador correspondiende (gestor) que es el que hace la pregunta
 
 
 

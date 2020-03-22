@@ -3,13 +3,13 @@ import java.io.*;
 class Pregunta implements Serializable {
     private String pregunta;
     private String respuesta;
-    private String jugador;
+    private int indice_jugador;
 
-	
-    Pregunta(String pregunta){
+
+  Pregunta(String pregunta, int indice){
 	this.pregunta = pregunta;
-
-}
+  this.indice_jugador = indice;
+  }
     public String getPregunta (){
 	return pregunta;
     }
@@ -17,15 +17,12 @@ class Pregunta implements Serializable {
     public void setRespuesta(String pregunta){
 	this.pregunta = pregunta;
     }
-	
+
     public String getRespuesta(){
-	return respuesta;
+	  return respuesta;
     }
 
-    public void setJugador(String jugador){
-	this.jugador = jugador;
-    }
 
     public String getJugador(){
-	return jugador;
+	     return this.indice_jugador;
     }

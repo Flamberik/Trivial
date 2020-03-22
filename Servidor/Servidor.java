@@ -23,8 +23,11 @@ class Servidor {
           srv.asigna_los_indices();
 
           //Envia notificación a todos los jugadores (No al gestor) que esperen a que el gestor formule la pregunta
-          srv.
+          String cadena = srv.avisa_jugadores();//cadena es la pregunta que el gestor escribe
+          Pregunta pregunta = new Pregunta(cadena);
 
+          //Enviamos la pregunta a todos los jugadores
+          srv.enviarPregunta(pregunta);
 
           //Aqui termina el juego
 

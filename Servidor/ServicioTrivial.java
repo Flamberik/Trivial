@@ -9,7 +9,11 @@ interface ServicioTrivialImpl extends Remote {
     void respuestaGanadora(Pregunta p) throws RemoteException; //El gestor indica quién ha ganado con esta función
 
     //añadido
-    void asigna_los_indices() throws RemoteException;//Esta función asigna a cada cliente el valor de índice que tienen en la lista (Para discriminar entre gestor y jugadores)
+    void asigna_los_indices() throws RemoteException; //Esta función asigna a cada cliente el valor de índice que tienen en la lista (Para discriminar entre gestor y jugadores)
     int tam_lista_jugadores() throws RemoteException;
+
+    String avisa_jugadores() throws RemoteException;
+
+    
 
 }
