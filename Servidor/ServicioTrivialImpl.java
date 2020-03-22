@@ -32,12 +32,7 @@ class ServicioTrivialImpl extends UnicastRemoteObject implements ServicioTrivial
   }
 
   void enviarPregunta (Pregunta p) throws RemoteException { //La funcion que utiliza el gestor para mandar la pregunta al servidor
-    Thread hilo = new Thread() {
-      public void run(){
-        System.out.println("run by: " + getName());
-      }
-    };
-    //
+
     for(ServicioJugador c: jugadores) {
       if(indicegestor!=jugadores.getindexof(c) {
         //Aun por saber si esto funciona
