@@ -32,11 +32,21 @@ class ServicioTrivialImpl extends UnicastRemoteObject implements ServicioTrivial
   }
 
   void enviarPregunta (Pregunta p) throws RemoteException { //La funcion que utiliza el gestor para mandar la pregunta al servidor
+    Thread hilo = new Thread() {
+      public void run(){
+        System.out.println("run by: " + getName());
+      }
+    };
+    //
     for(ServicioJugador c: jugadores) {
       if(indicegestor!=jugadores.getindexof(c) {
-        respuestas.add(jugadores.getindexof(c), c.mostrar_pregunta());
-        //Cada iteración del for bloquea el proceso esperando que el cliente correspondiente escriba la respuesta
-        //Necesitariamos crear un hilos para maximizar el rendimiento BUSCAR
+        //Aun por saber si esto funciona
+        new Thread("" + c.indice) {
+          public void run(){
+            respuestas.add(jugadores.getindexof(c), c.mostrar_pregunta());
+          }
+        }.start();
+        //Comprobar si los hilos funcionas con un print dentro del for por ejemplo (Mirar ejemploHilos.java)
       }
     }
   }
