@@ -6,9 +6,8 @@ class Pregunta implements Serializable {
     private int indice_jugador;
 
 
-  Pregunta(String pregunta, int indice){
+  Pregunta(String pregunta){
 	this.pregunta = pregunta;
-  this.indice_jugador = indice;
   }
     public String getPregunta (){
 	return pregunta;
@@ -23,6 +22,16 @@ class Pregunta implements Serializable {
     }
 
 
-    public String getJugador(){
-	     return this.indice_jugador;
+    public int getJugador(){
+	     return indice_jugador;
     }
+
+    public int getIndice() {
+      return indice_jugador;
+    }
+
+    public void setIndice(int i) {
+      this.indice_jugador=i;
+    }
+
+}
