@@ -1,6 +1,8 @@
 import java.util.*;
 import java.rmi.*;
 import java.rmi.server.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 class ServicioTrivialImpl extends UnicastRemoteObject implements ServicioTrivial {
   //List<String> jugadores; //Modificado BORRAR
@@ -32,34 +34,55 @@ public  void altaJugador (ServicioJugador j) throws RemoteException {
     respuestas.add(p);
   }
 
+
+//La peor función de la historia de las malas funciones
   public void enviarPregunta (Pregunta p) throws RemoteException  { //La funcion que utiliza el gestor para mandar la pregunta al servidor
-try{
-    for(ServicioJugador c: jugadores) {
-      if(indice_gestor!=c.getIndice()){ //Aun por saber si esto funciona pero creemos que sí
-        new Thread("" + c.getIndice()) {
-          public void run(){
-            int a=0;
-            try{ //Hay que corregir el fallo que da enviarPregunta (mirar salida).
-            a = c.getIndice();
-          }catch (RemoteException e){ System.out.println("Aborta"); }
-          try{
-            Pregunta b = c.mostrar_pregunta(p);
-            respuestas.add(b); //La b tenía antes exactamente lo que pone en Pregunta b (parámetros a y b para poder hacer el try/catch)
-          }catch (RemoteException e){ System.out.println("Aborta"); }
-
-
+    Thread[] threads = new Thread[3];
+    try {
+      for(ServicioJugador c: jugadores) {
+        if(indice_gestor!=c.getIndice()) { //Aun por saber si esto funciona pero creemos que sí
+          threads[c.getIndice()]=new Thread("" + c.getIndice()) {
+            public void run(){
+              int a=0;
+              try{ //Hay que corregir el fallo que da enviarPregunta (mirar salida).
+              a = c.getIndice();
+            }catch (RemoteException e){ System.out.println("Aborta"); }
+            try{
+              Pregunta b = c.mostrar_pregunta(p);
+              System.out.println("LA respuesta que le llega a la función enviarPregunta es: "+b.getRespuesta()); //ESTA ES LA RESPUESTA QUE SE HA RECIBIDO POR TECLADO
+              respuestas.add(b); //La b tenía antes exactamente lo que pone en Pregunta b (parámetros a y b para poder hacer el try/catch)
+            }catch (RemoteException e){ System.out.println("Aborta"); }
           }
-        }.start();
-        //Compr obar si los hilos funcionas con un print dentro del for por ejemplo (Mirar ejemploHilos.java)
+          };
+          threads[c.getIndice()].start();
+        }
       }
-      else { //¿Para el usuario que es el gestor que se hace?
-        //De momento el gestor no tiene que hacer nada en esta situacion.
+
+  /*    try{
+        threads[1].join(10000);
+        threads[2].join(10000);
+    //    threads[2].join(10000);
+  }  catch (InterruptedException e){System.out.println("Tuhmuerto");}*/
+
+      for(int i=0; i<jugadores.size();i++){
+        if(i==indice_gestor){
+
+        }
+        else{
+          try{
+            threads[i].join();
+        }  catch (InterruptedException e){System.out.println("Tuhmuerto");}
       }
     }
-  } catch (RemoteException e){ System.out.println("Aborta"); }
+    } catch (RemoteException e){ System.out.println("Aborta"); }
 
+  /*  for (Thread thread : threads){
+      try{
+        thread.join();
+      }
+      catch (InterruptedException e){System.out.println("Tuhmuerto");}catch(NullPointerException e){System.out.println("Nopointer");}
+    //Compr obar si los hilos funcionas con un print dentro del for por ejemplo (Mirar ejemploHilos.java)*/
   }
-
 
 
   //DUDAS Y NO ACABADA

@@ -1,8 +1,10 @@
+rmiregistry 54321 &
+
 Se ejecuta el servidor
-  $ java -Djava.security.policy=servidor.permisos ServidorTrivial 54321
+  $ java -Djava.security.policy=servidor.permisos Servidor 54321
 
 Se ejecutan los clientes
-  $ java -Djava.security.policy=cliente.permisos ClienteTrivial localhost 54321 id_jugador
+  $ java -Djava.security.policy=cliente.permisos Cliente localhost 54321
 
     1.En este proceso el cliente se dará de alta como jugador, siendo introducido en una
       lista donde el servidor tendrá a todos los jugadores localizados.
@@ -23,4 +25,3 @@ Se ejecutan los clientes
         -Envia notificación a todos los jugadores (Incluyendo al gestor) diciendo quien fue el más votado.
 
     8. El servidor cambia el rol de gestor al siguiente usuario de la lista y saltamos al paso 2
-

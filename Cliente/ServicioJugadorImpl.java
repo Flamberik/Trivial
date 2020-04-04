@@ -25,6 +25,7 @@ class ServicioJugadorImpl extends UnicastRemoteObject implements ServicioJugador
     }
 
     public Pregunta mostrar_pregunta(Pregunta p) throws RemoteException {
+      System.out.println("El indice de este jugador es: " + indice);
       //Los clientes muestran el valor de la pregunta y se quedan a la espera de que escriban por teclado y return susodicha cadena
       System.out.println("La pregunta es: " + p.getPregunta() + "\n");
 
@@ -32,7 +33,11 @@ class ServicioJugadorImpl extends UnicastRemoteObject implements ServicioJugador
       System.out.println("Escribe tu respuesta tronco\n");
       Scanner teclado = new Scanner(System.in);
       String respuesta = teclado.nextLine();
+
+      System.out.println("La cadena que vamos a meter en p.respuesta: " + respuesta);
       p.setRespuesta(respuesta);
+      System.out.println("La respuesta introducida es: " + p.getRespuesta());
+
       p.setIndice(indice);//Aqui va el indice del jugador);
       return p;
     }
@@ -55,12 +60,12 @@ class ServicioJugadorImpl extends UnicastRemoteObject implements ServicioJugador
 public    int conjuntoRespuestas (ArrayList <Pregunta> p) throws RemoteException {
       //El gestor recibe el array de preguntas:
       //Muestra por pantalla todas las respuestas
-      for (Pregunta preg : p) {
+        for (Pregunta preg : p) {
+        System.out.println("En medio del for");
         System.out.println(preg.getIndice() + ": " + preg.getRespuesta() + "\n");
       }
       Scanner teclado = new Scanner(System.in);
       String indice_respuestaGanadora = teclado.nextLine();
-
       return Integer.parseInt(indice_respuestaGanadora);
     }
 

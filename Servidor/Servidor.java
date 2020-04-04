@@ -19,30 +19,52 @@ class Servidor {
             System.out.println("Esperando a que los jugadores se conecten\n");
             Thread.sleep(2000);
           }
+
+
+
           //Recibe la lista completa de todos los clientes
           srv.asigna_los_indices();
+
+
+//Avisa a todos los jugadores de que comienza el juego
+          for(ServicioJugador c: srv.jugadores) {
+            //Comprobamos el índice de cada jugador, si es el que ha ganado se indica.
+              c.mensajePersonalizado("Comienza el juego");
+            }
+
+
+
 
           //Envia notificación a todos los jugadores (No al gestor) que esperen a que el gestor formule la pregunta
           Pregunta pregunta = srv.avisa_jugadores();//cadena es la pregunta que el gestor escribe
 
           //¿Cuanto vale pregunta?
           System.out.println(pregunta.getPregunta());
-          //Enviamos la pregunta a todos los jugadores
+          //Enviamos la pregunta a todos los jugadores y rellena el array de respuestas a la vez
+
           srv.enviarPregunta(pregunta);
 
-          //El servidore ya tiene todas las respuestas
+          //El servidor ya tiene todas las respuestas
           //ahora se las manda al gestor
           //srv.enviarPrguntas_alGestor()
+
+
+
+
+
           int indice_respuestaGanadora;
-          indice_respuestaGanadora=srv.jugadores.get(indice_gestor).conjuntoRespuestas(srv.respuestas);
+
+          indice_respuestaGanadora=srv.jugadores.get(indice_gestor).conjuntoRespuestas(srv.respuestas); //Esto se tiene que ejecutar cuando hayan respondido todos, no antes.
 
          //Hacemos un bucle
          for(ServicioJugador c: srv.jugadores) {
            if(indice_respuestaGanadora==c.getIndice()) {//Comprobamos el índice de cada jugador, si es el que ha ganado se indica.
              c.mensajePersonalizado("Illo has ganao");
            }
-           else{
-             c.mensajePersonalizado("Illo eres to malo");
+           else if(indice_gestor==c.getIndice()){
+            c.mensajePersonalizado("Ha ganao el jugador "+indice_respuestaGanadora);
+           }else{
+              c.mensajePersonalizado("Illo eres to malo");
            }
         }
         indice_gestor++; //El gestor pasa a ser el siguiente.

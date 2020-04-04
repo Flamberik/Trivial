@@ -13,8 +13,8 @@ class Pregunta implements Serializable {
 	return pregunta;
     }
 
-    public void setRespuesta(String pregunta){
-	this.pregunta = pregunta;
+    public void setRespuesta(String respuesta){
+	this.respuesta = respuesta;
     }
 
     public String getRespuesta(){
