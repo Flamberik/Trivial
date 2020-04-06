@@ -26,17 +26,17 @@ class Servidor {
       //Avisa a todos los jugadores de que comienza el juego
       for(ServicioJugador c: srv.jugadores) {
         //Comprobamos el índice de cada jugador, si es el que ha ganado se indica.
-        c.mensajePersonalizado("Comienza el juego");
+        c.mensajePersonalizado("¡Comienza el juego!");
       }
 
       List<Integer> puntos = new ArrayList<>(); //Puntuaciones de cada jugador correspondiente al indice
       for(int i=0;i<Integer.parseInt(args[1]);i++){//Inicializamos el array a 0 puntos
         puntos.add(0);
       }
-
+      int jugadorganador = -1;
       boolean juego=true;
       while(juego){
-        System.out.println("El indice del gestor es " + indice_gestor);
+        System.out.println("Esta ronda la pregunta la realizará el jugador " + indice_gestor);
         //Envia notificación a todos los jugadores (No al gestor) que esperen a que el gestor formule la pregunta
         Pregunta pregunta = srv.avisa_jugadores(indice_gestor);//cadena es la pregunta que el gestor escribe
         //¿Cuanto vale pregunta?
@@ -53,23 +53,63 @@ class Servidor {
         //Hacemos un bucle
         for(ServicioJugador c: srv.jugadores) {
           if(indice_respuestaGanadora==c.getIndice()) {//Comprobamos el índice de cada jugador, si es el que ha ganado se indica.
-            c.mensajePersonalizado("Illo has ganao");
+            c.mensajePersonalizado("¡Has ganado esta ronda! Un punto más a tu marcador.");
             puntos.set(indice_respuestaGanadora, puntos.get(indice_respuestaGanadora)+1);
+
+            switch(puntos.get(c.getIndice())){
+              case 0:
+                c.mensajePersonalizado("Actualmente no tienes ningún punto.");
+                break;
+              case 1:
+                c.mensajePersonalizado("Actualmente tienes "+puntos.get(c.getIndice()) +" punto.");
+                break;
+              default:
+                c.mensajePersonalizado("Actualmente tienes "+puntos.get(c.getIndice()) +" puntos.");
+            }
           }
           else if(indice_gestor==c.getIndice()){
-            c.mensajePersonalizado("Ha ganao el jugador "+indice_respuestaGanadora);
+            c.mensajePersonalizado("¡Ha ganado el jugador "+indice_respuestaGanadora +"!");
+            switch(puntos.get(c.getIndice())){
+              case 0:
+                c.mensajePersonalizado("Actualmente no tienes ningún punto.");
+                break;
+              case 1:
+                c.mensajePersonalizado("Actualmente tienes "+puntos.get(c.getIndice()) +" punto.");
+                break;
+              default:
+                c.mensajePersonalizado("Actualmente tienes "+puntos.get(c.getIndice()) +" puntos.");
+            }
+
+
           }else{
-            c.mensajePersonalizado("Illo eres to malo");
+            c.mensajePersonalizado("Has perdido esta ronda :(");
+            switch(puntos.get(c.getIndice())){
+              case 0:
+                c.mensajePersonalizado("Actualmente no tienes ningún punto.");
+                break;
+              case 1:
+                c.mensajePersonalizado("Actualmente tienes "+puntos.get(c.getIndice()) +" punto.");
+                break;
+              default:
+                c.mensajePersonalizado("Actualmente tienes "+puntos.get(c.getIndice()) +" puntos.");
+            }
           }
         }
         indice_gestor++; //El gestor pasa a ser el siguiente.
-        System.out.println("Indice gestor al final del codigo:" + indice_gestor);
+        if(indice_gestor>=Integer.parseInt(args[1])){
+          indice_gestor = 0;
+        }
 
         for(Integer i: puntos){
           if(i>=3)
             juego=false;
+            jugadorganador=i;
         }
         srv.respuestas.clear(); //Vaciamos el array para que no se vayan acumulando respuestas
+      }
+
+      for(ServicioJugador c: srv.jugadores){
+        c.mensajePersonalizado("¡La victoria es para el jugador "+ jugadorganador+"!");
       }
     } //fin try
     //Aqui termina el juego
