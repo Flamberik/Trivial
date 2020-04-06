@@ -17,9 +17,6 @@ class Cliente {
           ServicioJugadorImpl c = new ServicioJugadorImpl(); //No sé ni si hace falta
           //Aqui empieza el juego
           srv.altaJugador(c); //Damos de alta al jugador en el servidor
-
-
-
           //Aqui termina el juego
 
       }

@@ -1,7 +1,7 @@
 rmiregistry 54321 &
 
 Se ejecuta el servidor
-  $ java -Djava.security.policy=servidor.permisos Servidor 54321
+  $ java -Djava.security.policy=servidor.permisos Servidor 54321 3
 
 Se ejecutan los clientes
   $ java -Djava.security.policy=cliente.permisos Cliente localhost 54321

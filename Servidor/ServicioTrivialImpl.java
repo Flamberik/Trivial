@@ -37,7 +37,7 @@ public  void altaJugador (ServicioJugador j) throws RemoteException {
 
 //La peor función de la historia de las malas funciones
   public void enviarPregunta (Pregunta p) throws RemoteException  { //La funcion que utiliza el gestor para mandar la pregunta al servidor
-    Thread[] threads = new Thread[3];
+    Thread[] threads = new Thread[jugadores.size()];
     try {
       for(ServicioJugador c: jugadores) {
         if(indice_gestor!=c.getIndice()) { //Aun por saber si esto funciona pero creemos que sí
@@ -58,15 +58,8 @@ public  void altaJugador (ServicioJugador j) throws RemoteException {
         }
       }
 
-  /*    try{
-        threads[1].join(10000);
-        threads[2].join(10000);
-    //    threads[2].join(10000);
-  }  catch (InterruptedException e){System.out.println("Tuhmuerto");}*/
-
       for(int i=0; i<jugadores.size();i++){
         if(i==indice_gestor){
-
         }
         else{
           try{
@@ -85,7 +78,7 @@ public  void altaJugador (ServicioJugador j) throws RemoteException {
   }
 
 
-  //DUDAS Y NO ACABADA
+  //NO SE USA
 public  void respuestaGanadora(Pregunta p) throws RemoteException {//Enviarle a todo el mundo cual ha sido la respuesta ganadora
 
     indice_gestor++;//para cambiar el gestor d ela proxima partida
@@ -103,16 +96,16 @@ public  void respuestaGanadora(Pregunta p) throws RemoteException {//Enviarle a 
     }
   }
 
-  public Pregunta avisa_jugadores() throws RemoteException { //Esta función se ejecuta al comenzar el juego para decirle al gestor que está esperando una pregunta y a los clientes que el gestor la va a escribir
+  public Pregunta avisa_jugadores(int indice_gestor) throws RemoteException { //Esta función se ejecuta al comenzar el juego para decirle al gestor que está esperando una pregunta y a los clientes que el gestor la va a escribir
+    this.indice_gestor= indice_gestor;
     String pregunta = "";
     for(ServicioJugador c: jugadores) {//METER ESTE FOR EN HILOS PARA MAXIMIZAR RENDIMIENTO!!
       if(indice_gestor!=c.getIndice()) {
         c.esperando_Pregunta();
       }
-      else {
-        pregunta = c.solicitar_pregunta();
-      }
     }
+    jugadores.get(indice_gestor).solicitar_pregunta();
+
     Pregunta p = new Pregunta(pregunta);
     p.setIndice(indice_gestor); //Convertimos el string a objeto tipo pregunta lo devolvemos.
     return p;
