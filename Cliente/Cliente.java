@@ -17,6 +17,7 @@ class Cliente {
           ServicioJugadorImpl c = new ServicioJugadorImpl(); //No sé ni si hace falta
           //Aqui empieza el juego
           srv.altaJugador(c); //Damos de alta al jugador en el servidor
+          System.out.println("Conexión establecida, esperando a los demás jugadores...");
           //Aqui termina el juego
 
       }
