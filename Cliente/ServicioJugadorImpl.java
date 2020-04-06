@@ -1,6 +1,7 @@
 import java.util.*;
 import java.rmi.*;
 import java.rmi.server.*;
+import java.util.Scanner;
 
 class ServicioJugadorImpl extends UnicastRemoteObject implements ServicioJugador{
     //String getResultado(String resultado) throws RemoteException;
@@ -20,7 +21,7 @@ class ServicioJugadorImpl extends UnicastRemoteObject implements ServicioJugador
     //-----------------------------
     public void esperando_Pregunta() throws RemoteException {//¿Como conseguimos que el servidor avise a los clientes de que el gestor ya ha escrito la pregunta
       comienzo=true;
-      System.out.println("\n El gestor está escribiendo la pregunta...\n");
+      System.out.println("\nTodavía no ha llegado la pregunta. ¡Paciencia! \n");
 
     }
 
@@ -30,11 +31,10 @@ class ServicioJugadorImpl extends UnicastRemoteObject implements ServicioJugador
       System.out.println("La pregunta es: " + p.getPregunta() + "\n");
 
       // EN EL CODIGO DEL CLIENTE
-      System.out.println("Escribe tu respuesta tronco\n");
+      System.out.println("¡Escribe tu respuesta!\n");
       Scanner teclado = new Scanner(System.in);
       String respuesta = teclado.nextLine();
 
-      System.out.println("La cadena que vamos a meter en p.respuesta: " + respuesta);
       p.setRespuesta(respuesta);
       System.out.println("La respuesta introducida es: " + p.getRespuesta());
 
@@ -46,13 +46,13 @@ class ServicioJugadorImpl extends UnicastRemoteObject implements ServicioJugador
     //        Gestor
     //-----------------------------
     public String solicitar_pregunta() throws RemoteException { //Función para avisar al jugador correspondiente que en este turno es el gestor
-      System.out.println("\n En este turno eres tu el gestor, escribe la pregunta que quieras enviar\n");
+      System.out.println("\nEn este turno te toca a ti preguntar, escribe la pregunta que quieras enviar\n");
 
 // EN EL CODIGO DEL CLIENTE
       Scanner teclado = new Scanner(System.in);
       String pregunta = teclado.nextLine();
 
-
+    //  System.out.println("SE HA MANDAO LA PREGUNTA "+pregunta);
       return pregunta;
     }
 
@@ -61,12 +61,21 @@ public    int conjuntoRespuestas (ArrayList <Pregunta> p) throws RemoteException
       //El gestor recibe el array de preguntas:
       //Muestra por pantalla todas las respuestas
         for (Pregunta preg : p) {
-        System.out.println("En medio del for");
-        System.out.println(preg.getIndice() + ": " + preg.getRespuesta() + "\n");
+
+        System.out.println("La respuesta del jugador "+preg.getIndice() + " es: " + preg.getRespuesta() + "\n");
       }
-      Scanner teclado = new Scanner(System.in);
-      String indice_respuestaGanadora = teclado.nextLine();
-      return Integer.parseInt(indice_respuestaGanadora);
+      System.out.println("¿Cuál es la mejor respuesta? ¡Escribe el índice del jugador que la haya escrito!");
+      Scanner scan = new Scanner(System.in);
+      int numleido = -1;
+      while(numleido < 0 || numleido> p.size()){
+      while (!scan.hasNextInt()) {
+            System.out.println("Eso no es una respuesta válida, prueba otra vez.");
+            scan.nextLine();
+          }
+      System.out.println("Eso no es una respuesta válida, prueba otra vez.");
+      numleido = scan.nextInt();
+    }
+      return numleido;
     }
 
 
