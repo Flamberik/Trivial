@@ -57,22 +57,22 @@ class ServicioJugadorImpl extends UnicastRemoteObject implements ServicioJugador
     }
 
 
-public    int conjuntoRespuestas (ArrayList <Pregunta> p) throws RemoteException {
+public    int conjuntoRespuestas (ArrayList <Pregunta> p, int ind_gest) throws RemoteException {
       //El gestor recibe el array de preguntas:
       //Muestra por pantalla todas las respuestas
         for (Pregunta preg : p) {
 
         System.out.println("La respuesta del jugador "+preg.getIndice() + " es: " + preg.getRespuesta() + "\n");
       }
-      System.out.println("¿Cuál es la mejor respuesta? ¡Escribe el índice del jugador que la haya escrito!");
+    //  System.out.println("¿Cuál es la mejor respuesta? ¡Escribe el índice del jugador que la haya escrito!");
       Scanner scan = new Scanner(System.in);
       int numleido = -1;
-      while(numleido < 0 || numleido> p.size()){
+      while(numleido < 0 || numleido> p.size() || numleido==ind_gest){
+        System.out.println("¿Cuál es la mejor respuesta? ¡Escribe el índice del jugador que la haya escrito!");
       while (!scan.hasNextInt()) {
             System.out.println("Eso no es una respuesta válida, prueba otra vez.");
             scan.nextLine();
           }
-      System.out.println("Eso no es una respuesta válida, prueba otra vez.");
       numleido = scan.nextInt();
     }
       return numleido;

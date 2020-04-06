@@ -31,7 +31,7 @@ interface ServicioJugador extends Remote {
 //-----------------------------
   void asignar_indice(int index) throws RemoteException;
 
-	int conjuntoRespuestas (ArrayList <Pregunta> p) throws RemoteException;
+	int conjuntoRespuestas (ArrayList <Pregunta> p, int ind_gest) throws RemoteException;
 	//Todos los clientes se quedan esperando (los que no sean gestor después de mandar la respuesta. Una vez que el servidor tiene todas las respuestas le manda el conjuntoRespuestas a los jugadores. El cliente que sea gestor en ese momento podrá decidir quién ha ganao en su código y llamará otra vez al servidor.
 
   public void mensajePersonalizado(String s) throws RemoteException;

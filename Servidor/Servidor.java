@@ -48,7 +48,7 @@ class Servidor {
         //srv.enviarPrguntas_alGestor()
         int indice_respuestaGanadora;
 
-        indice_respuestaGanadora=srv.jugadores.get(indice_gestor).conjuntoRespuestas(srv.respuestas); //Esto se tiene que ejecutar cuando hayan respondido todos, no antes.
+        indice_respuestaGanadora=srv.jugadores.get(indice_gestor).conjuntoRespuestas(srv.respuestas, indice_gestor); //Esto se tiene que ejecutar cuando hayan respondido todos, no antes.
 
         //Hacemos un bucle
         for(ServicioJugador c: srv.jugadores) {
