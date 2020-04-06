@@ -49,7 +49,7 @@ public  void altaJugador (ServicioJugador j) throws RemoteException {
             }catch (RemoteException e){ System.out.println("Aborta"); }
             try{
               Pregunta b = c.mostrar_pregunta(p);
-              System.out.println("LA respuesta que le llega a la función enviarPregunta es: "+b.getRespuesta()); //ESTA ES LA RESPUESTA QUE SE HA RECIBIDO POR TECLADO
+              System.out.println("La respuesta que ha enviado el jugador "+c.getIndice()+" es "+b.getRespuesta()); //ESTA ES LA RESPUESTA QUE SE HA RECIBIDO POR TECLADO
               respuestas.add(b); //La b tenía antes exactamente lo que pone en Pregunta b (parámetros a y b para poder hacer el try/catch)
             }catch (RemoteException e){ System.out.println("Aborta"); }
           }
@@ -104,8 +104,7 @@ public  void respuestaGanadora(Pregunta p) throws RemoteException {//Enviarle a 
         c.esperando_Pregunta();
       }
     }
-    jugadores.get(indice_gestor).solicitar_pregunta();
-
+    pregunta = jugadores.get(indice_gestor).solicitar_pregunta();
     Pregunta p = new Pregunta(pregunta);
     p.setIndice(indice_gestor); //Convertimos el string a objeto tipo pregunta lo devolvemos.
     return p;
