@@ -68,7 +68,11 @@ public    int conjuntoRespuestas (ArrayList <Pregunta> p, int ind_gest) throws R
       Scanner scan = new Scanner(System.in);
       int numleido = -1;
       while(numleido < 0 || numleido> p.size() || numleido==ind_gest){
+        if(numleido==ind_gest){
+            System.out.println("¡No puedes ponerte a ti mismo!");
+        }else{
         System.out.println("¿Cuál es la mejor respuesta? ¡Escribe el índice del jugador que la haya escrito!");
+      }
       while (!scan.hasNextInt()) {
             System.out.println("Eso no es una respuesta válida, prueba otra vez.");
             scan.nextLine();
