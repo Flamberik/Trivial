@@ -6,6 +6,8 @@ Se ejecuta el servidor
 Se ejecutan los clientes
   $ java -Djava.security.policy=cliente.permisos Cliente localhost 54321
 
+
+----Prototipo de desarrollo------
     1.En este proceso el cliente se dará de alta como jugador, siendo introducido en una
       lista donde el servidor tendrá a todos los jugadores localizados.
     2.El servidor espera a que hallan 2 jugadores conectados para dar comienzo al juego.

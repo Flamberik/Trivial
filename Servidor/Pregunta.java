@@ -1,5 +1,8 @@
 import java.io.*;
 
+//Esta clase contiene tanto la pregunta (que la enviará el jugador que pregunte en cada momento) así como las respuestas.
+//El resto de jugadores completarán los campos de respuesta y de índice.
+
 class Pregunta implements Serializable {
     private String pregunta;
     private String respuesta;

@@ -30,27 +30,28 @@ public  void altaJugador (ServicioJugador j) throws RemoteException {
     jugadores.remove(jugadores.indexOf(j));
   }
 
-  public void contestarPregunta (Pregunta p) throws RemoteException { //El jugador responde una pregunta y la mete
-    respuestas.add(p);
+  public void contestarPregunta (Pregunta p) throws RemoteException {
+    respuestas.add(p); //Cuando un jugador responde se añade la respuesta al array de objetos pregunta con las respuestas
   }
 
 
-//La peor función de la historia de las malas funciones
-  public void enviarPregunta (Pregunta p) throws RemoteException  { //La funcion que utiliza el gestor para mandar la pregunta al servidor
+//Esta función envía la pregunta que el gestor escriba a cada uno de los jugadores
+//Y se queda esperando (Con el uso de hilos) a que cada uno de los jugadores envíe su respuesta
+  public void enviarPregunta (Pregunta p) throws RemoteException  { //La funcion que utiliza el gestor para mandar la pregunta al servidor (Y posteriormente el servidor a cada uno de los jugadores)
     Thread[] threads = new Thread[jugadores.size()];
     try {
       for(ServicioJugador c: jugadores) {
-        if(indice_gestor!=c.getIndice()) { //Aun por saber si esto funciona pero creemos que sí
+        if(indice_gestor!=c.getIndice()) { //Creamos hilos para que a cada jugador se le envíe la pregunta de manera independiente y estos puedan responder sin tener que esperar al resto.
           threads[c.getIndice()]=new Thread("" + c.getIndice()) {
-            public void run(){
+            public void run(){ //Se ejecuta cada hilo
               int a=0;
-              try{ //Hay que corregir el fallo que da enviarPregunta (mirar salida).
+              try{
               a = c.getIndice();
             }catch (RemoteException e){ System.out.println("Aborta"); }
-            try{
+            try{ //Se reciben todas las pregutas de cada hilo
               Pregunta b = c.mostrar_pregunta(p);
-              System.out.println("La respuesta que ha enviado el jugador "+c.getIndice()+" es "+b.getRespuesta()); //ESTA ES LA RESPUESTA QUE SE HA RECIBIDO POR TECLADO
-              respuestas.add(b); //La b tenía antes exactamente lo que pone en Pregunta b (parámetros a y b para poder hacer el try/catch)
+              System.out.println("La respuesta que ha enviado el jugador "+c.getIndice()+" es "+b.getRespuesta());
+              respuestas.add(b);
             }catch (RemoteException e){ System.out.println("Aborta"); }
           }
           };
@@ -64,7 +65,7 @@ public  void altaJugador (ServicioJugador j) throws RemoteException {
         else{
           try{
             threads[i].join();
-        }  catch (InterruptedException e){System.out.println("Tuhmuerto");}
+        }  catch (InterruptedException e){System.out.println("Error en el join de los hilos");}
       }
     }
     } catch (RemoteException e){ System.out.println("Aborta"); }
@@ -74,18 +75,18 @@ public  void altaJugador (ServicioJugador j) throws RemoteException {
         thread.join();
       }
       catch (InterruptedException e){System.out.println("Tuhmuerto");}catch(NullPointerException e){System.out.println("Nopointer");}
-    //Compr obar si los hilos funcionas con un print dentro del for por ejemplo (Mirar ejemploHilos.java)*/
+    //Comprobar si los hilos funcionas con un print dentro del for por ejemplo (Mirar ejemploHilos.java)*/
   }
 
 
   //NO SE USA
 public  void respuestaGanadora(Pregunta p) throws RemoteException {//Enviarle a todo el mundo cual ha sido la respuesta ganadora
 
-    indice_gestor++;//para cambiar el gestor d ela proxima partida
+    indice_gestor++;//para cambiar el gestor de la proxima partida
   }
 
 
-  //añadido
+  //Para indicar el tamaño de la lista de jugadores
   public int tam_lista_jugadores() throws RemoteException {
     return jugadores.size();
   }
@@ -96,10 +97,11 @@ public  void respuestaGanadora(Pregunta p) throws RemoteException {//Enviarle a 
     }
   }
 
-  public Pregunta avisa_jugadores(int indice_gestor) throws RemoteException { //Esta función se ejecuta al comenzar el juego para decirle al gestor que está esperando una pregunta y a los clientes que el gestor la va a escribir
+//Esta función se ejecuta al comenzar el juego para decirle al gestor que está esperando una pregunta y a los clientes que el gestor la va a escribir
+  public Pregunta avisa_jugadores(int indice_gestor) throws RemoteException {
     this.indice_gestor= indice_gestor;
     String pregunta = "";
-    for(ServicioJugador c: jugadores) {//METER ESTE FOR EN HILOS PARA MAXIMIZAR RENDIMIENTO!!
+    for(ServicioJugador c: jugadores) { //Se avisa a cada jugador y se espera una respuesta con la pregunta
       if(indice_gestor!=c.getIndice()) {
         c.esperando_Pregunta();
       }

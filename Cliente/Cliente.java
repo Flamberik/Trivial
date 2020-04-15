@@ -14,11 +14,11 @@ class Cliente {
 
       try {
           ServicioTrivial srv = (ServicioTrivial) Naming.lookup("//" + args[0] + ":" + args[1] + "/Trivial");
-          ServicioJugadorImpl c = new ServicioJugadorImpl(); //No sé ni si hace falta
+          ServicioJugadorImpl c = new ServicioJugadorImpl();
           //Aqui empieza el juego
           srv.altaJugador(c); //Damos de alta al jugador en el servidor
           System.out.println("Conexión establecida, esperando a los demás jugadores...");
-          //Aqui termina el juego
+          //El resto de la lógica del programa lo llevará a cabo el servidor.
 
       }
       catch (RemoteException e) {

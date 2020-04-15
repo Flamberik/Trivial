@@ -10,7 +10,7 @@ interface ServicioTrivial extends Remote {
 
     //añadido
   public void asigna_los_indices() throws RemoteException; //Esta función asigna a cada cliente el valor de índice que tienen en la lista (Para discriminar entre gestor y jugadores)
-  public int tam_lista_jugadores() throws RemoteException;
+  public int tam_lista_jugadores() throws RemoteException; //Devuelve el numero de jugadores en la partida
 
   public  Pregunta avisa_jugadores(int indice_gestor) throws RemoteException;
   //Esta función se ejecuta al comenzar el juego para decirle al gestor que está esperando una pregunta y a los clientes que el gestor la va a escribir
